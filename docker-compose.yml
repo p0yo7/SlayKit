@@ -1,0 +1,20 @@
+services:
+  api:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/datos:/app/datos
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./webapp/heybanco  
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - api
+    restart: unless-stopped
